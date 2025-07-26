@@ -20,8 +20,7 @@ function App() {
   useEffect(() => {
     socket.on("chat", (payload) => {
       setChatHistory((prev) => [...prev, payload]);
-      console.log(chatHistory);
-    });
+    },[chatHistory]);
 
     // Cleanup function to remove the event listener
     return () => {
