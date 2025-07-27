@@ -1,7 +1,7 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { app } from "./app.js";
-import { connectDB } from "../db/inddex.db.js";
+import { connectDB } from "./db/inddex.db.js";
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
