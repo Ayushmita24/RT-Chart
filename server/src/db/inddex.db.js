@@ -9,6 +9,8 @@ const connectDB = async () => {
       "MongoDB connected successfully:",
       connectionInstance.connection.host
     );
+    //delete the database
+    // await connectionInstance.connection.db.dropDatabase();
   } catch (error) {
     console.log("Error connecting to MongoDB:", error.message);
     process.exit(1); // Exit the process with failure
