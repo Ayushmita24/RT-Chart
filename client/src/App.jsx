@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./components/login"; // lowercase since your file is login.jsx
+import Login from "./components/login";//login.jsx 
 import Register from "./components/Register";
-import Home from "./components/Home";
+import Home from "./components/HomeOld";
 
 function App() {
   return (

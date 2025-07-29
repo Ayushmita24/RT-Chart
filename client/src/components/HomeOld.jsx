@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
-import getUser from "../utils/user";  // ✅ Only this part changed
-import "../App.css";
+import { nanoid } from "nanoid";
+import "../App.css"; // Assuming App.css is in src/
 
 const socket = io("http://localhost:3000");
-const { id: userId } = getUser(); // ✅ Keeps it clean
+const userId = nanoid(6); // Generate a unique ID for the user
 
 function Home() {
   const [message, setMessage] = useState("");
