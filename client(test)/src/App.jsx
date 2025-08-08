@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
-import { nanoid } from "nanoid";
+// import { nanoid } from "nanoid";
 import "./App.css"; // Assuming App.css is in src/
 
 const socket = io("http://localhost:3000");
-const userId = nanoid(6); // Generate a unique ID for the user
+// const userId = nanoid(6); // Generate a unique ID for the user
 
 function Home() {
   const [message, setMessage] = useState("");
@@ -14,7 +14,7 @@ function Home() {
 
   const registerUser = () => {
     if (username.trim() === "") return;
-    socket.emit("register", { username });
+    socket.emit("register", { userid:username });
   };
   const sendMessage = (e) => {
     e.preventDefault();
@@ -26,7 +26,7 @@ function Home() {
 
   useEffect(() => {
     socket.on("private", (payload) => {
-      setChatHistory((prev) => [...prev, payload]);
+      setChatHistory((prev) => [...prev, payload.content]);
       console.log("Message received:", payload);
     });
 

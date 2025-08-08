@@ -6,23 +6,46 @@ const userSchema = new mongoose.Schema(
     fname: {
       type: String,
       required: true,
+      trim: true,
+      minlength: 2,
+      maxlength: 50,
     },
     lname: {
       type: String,
       required: true,
+      trim: true,
+      minlength: 2,
+      maxlength: 50,
     },
     userid: {
       type: String,
       required: true,
+      unique: true,
+      trim: true,
+      minlength: 3,
+      maxlength: 20,
     },
     email: {
       type: String,
       required: true,
       unique: true,
+      trim: true,
+      lowercase: true,
     },
     password: {
       type: String,
       required: true,
+      select: false, // Exclude password from queries by default
+      trim: true,
+    },
+    friendList: {
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+      default: [],
     },
   },
   {
