@@ -7,7 +7,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "*",
+    origin: process.env.CORS_ORIGIN,
     credentials: true,
   })
 );
@@ -16,10 +16,10 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-//routes
-import userRouter from "./routes/user.routes.js";
-//routes implementation
-app.use("/api/v1/user", userRouter);
+// routes
+import authRouter from "./routes/auth.routes.js";
+// routes implementation
+app.use("/api/v1/auth", authRouter);
 
 // Error handling middleware (must be last)
 app.use(errorHandler);

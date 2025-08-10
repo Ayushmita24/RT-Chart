@@ -2,37 +2,45 @@ import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema(
   {
-    // sender: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "User",
-    //   required: true,
-    // },
-    // receiver: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "User",
-    //   required: true,
-    // },
-    sender: {
-      type: String,
+    conversation: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Conversation",
       required: true,
     },
-    receiver: {
-      type: String,
+    sender: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     content: {
       type: String,
       required: true,
-      trim: true,
     },
-    expireAt: {
-      type: Date,
-      default: () => new Date(Date.now() + 1 * 60 * 1000), // Default to 1 minute from now
+    attachments: [
+      {
+        type: String,
+      },
+    ],
+    messageType: {
+      type: String,
+      enum: ["text", "image", "video", "file"],
+      default: "text",
     },
+    readBy: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   { timestamps: true }
 );
 
-messageSchema.index({ expireAt: 1 }, { expireAfterSeconds: 0 });
+messageSchema.post("save", async function(doc) {
+  await mongoose.model("Conversation").updateOne(
+    { _id: doc.conversation },
+    { $set: { lastMessage: doc._id } }
+  );
+});
 
 export const Message = mongoose.model("Message", messageSchema);
